@@ -41,7 +41,8 @@ INSTALLED_APPS = [
 
     'user_auth',
 
-    'rest_framework_simplejwt',
+    'rest_framework.authtoken'
+
 ]
 
 MIDDLEWARE = [
@@ -126,7 +127,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
         'social_network.csrf_exempt.CsrfExemptSessionAuthentication',
     ),
 }
