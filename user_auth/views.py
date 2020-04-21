@@ -45,3 +45,18 @@ class PostView(generics.CreateAPIView):
 
     def get_queryset(self):
         return Post.objects.filter(user=self.request.user)
+
+
+class PostLikesListView(generics.ListCreateAPIView):
+    serializer_class = serializers.LikeSerializer
+
+    def get_queryset(self):
+        return Like.objects.filter(post_id=self.kwargs.get('pk'))
+
+
+class PostCommentsListView(generics.ListCreateAPIView):
+    serializer_class = serializers.CommentSerializer
+
+    def get_queryset(self):
+        return Comment.objects.filter(post_id=self.kwargs.get('pk'))
+

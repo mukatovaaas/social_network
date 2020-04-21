@@ -24,3 +24,20 @@ class PostSerializer(serializers.ModelSerializer):
         fields = ('user', 'content', 'created_at')
 
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Like
+        fields = ('user', 'post', 'username')
+
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    username = serializers.ReadOnlyField(source='user.username')
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('user', 'post', 'content')
+
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
