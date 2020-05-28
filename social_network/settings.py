@@ -82,9 +82,17 @@ WSGI_APPLICATION = 'social_network.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd8ld5f4jl76ovv',
+        'USER': 'zejrhsvkzwixuy',
+        'PASSWORD': '322628b164cfc3601dae5b281204a1e5d716e0c1618b018b6dd76bec358ed7c2',
+        'HOST': 'ec2-54-246-85-151.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
