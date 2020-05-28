@@ -16,7 +16,7 @@ class FollowerListView(generics.ListAPIView):
 
 
 class FollowingListView(generics.ListAPIView):
-    serializer_class = serializers.FollowerSerializer
+    serializer_class = serializers.FollowingSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
