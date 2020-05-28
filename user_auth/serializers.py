@@ -50,5 +50,25 @@ class FollowSerializer(serializers.ModelSerializer):
 
     follower = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
-    def update(self, instance, validated_data):
-        print(instance)
+
+from djoser.serializers import UserSerializer
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+
+class CustomUserSerializer(UserSerializer):
+    class Meta:
+        model = User
+        fields = tuple(User.REQUIRED_FIELDS) + (
+            'id',
+            'username',
+            'is_following'
+        )
+        read_only_fields = ('username',)
+
+    is_following = serializers.SerializerMethodField(read_only=True)
+
+    def get_is_following(self, obj):
+        user = self.context['request'].user
+        return True if Follower.objects.filter(follower=user, following=obj) else False

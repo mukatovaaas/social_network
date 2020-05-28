@@ -149,5 +149,10 @@ LOGIN_URL = '/api/roken/login/'
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT',),
 }
+DJOSER = {
+    'SERIALIZERS': {
+        'user': 'user_auth.serializers.CustomUserSerializer',
+    },
 
+}
 django_heroku.settings(locals())
