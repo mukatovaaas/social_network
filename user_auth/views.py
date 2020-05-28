@@ -25,6 +25,7 @@ class FollowingListView(generics.ListAPIView):
 
 class PostListView(generics.ListAPIView):
     serializer_class = serializers.PostSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         queryset = Post.objects.filter(
@@ -35,6 +36,7 @@ class PostListView(generics.ListAPIView):
 
 class MyPostListView(generics.ListAPIView):
     serializer_class = serializers.PostSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return Post.objects.filter(user=self.request.user).order_by('-created_at')
@@ -59,4 +61,3 @@ class PostCommentsListView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         return Comment.objects.filter(post_id=self.kwargs.get('pk'))
-

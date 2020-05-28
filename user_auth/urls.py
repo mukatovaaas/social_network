@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', include('djoser.urls')),
-    path('', include('djoser.urls.authtoken')),
+    path('', include('djoser.urls.jwt')),
     path('followers/', views.FollowerListView.as_view()),
     path('following/', views.FollowingListView.as_view()),
     path('posts/<int:pk>', views.PostListView.as_view()),
@@ -14,5 +14,5 @@ urlpatterns = [
     path('post/', views.PostView.as_view()),
 ]
 
-# login http://localhost:8000/auth/token/login
 # register http://localhost:8000/auth/users
+# login http://localhost:8000/auth/token/login
