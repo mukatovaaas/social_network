@@ -41,3 +41,14 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ('user', 'post', 'content')
 
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+
+class FollowSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Follower
+        fields = ('follower', 'following')
+
+    follower = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    def update(self, instance, validated_data):
+        print(instance)

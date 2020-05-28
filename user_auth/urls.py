@@ -12,6 +12,8 @@ urlpatterns = [
     path('comments/<int:pk>', views.PostCommentsListView.as_view()),
     path('posts/', views.MyPostListView.as_view()),
     path('post/', views.PostView.as_view()),
+    path('follow/', views.FollowCreateView.as_view()),
+    path('unfollow/', views.FollowDestroyView.as_view()),
 ]
 
 # register http://localhost:8000/auth/users
