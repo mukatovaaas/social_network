@@ -27,9 +27,11 @@ class FollowingSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ('user', 'content', 'created_at')
+        fields = ('id', 'user', 'user_', 'content', 'created_at', 'likes')
 
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    user_ = serializers.ReadOnlyField(source='user.username')
+    likes = serializers.ReadOnlyField(source='like_set.count')
 
 
 class LikeSerializer(serializers.ModelSerializer):
