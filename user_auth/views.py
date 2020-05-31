@@ -95,4 +95,21 @@ class SendMessageView(generics.CreateAPIView, generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return Message.objects.filter(Q(sender=self.request.user) | Q(recipient=self.request.user))
+        return Message.objects\
+            .filter(Q(sender=self.request.user) | Q(recipient=self.request.user))\
+            .order_by('-created_at')
+
+
+class UserMessagesView(generics.ListAPIView):
+    serializer_class = serializers.MessageCreateSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        return Message.objects.filter(
+            (Q(recipient=self.request.user) & Q(sender_id=self.recipient)) |
+            (Q(recipient_id=self.recipient) & Q(sender=self.request.user))
+        ).order_by('-created_at')
+
+    def get(self, request, *args, **kwargs):
+        self.recipient = kwargs['user']
+        return super().get(request, *args, **kwargs)

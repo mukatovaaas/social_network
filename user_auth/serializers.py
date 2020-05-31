@@ -75,7 +75,10 @@ class CustomUserSerializer(UserSerializer):
 class MessageCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ('sender', 'recipient', 'message', 'created_at')
-        read_only_fields = ('created_at',)
+        fields = ('sender', 'recipient', 'message', 'created_at', 'sender_', 'recipient_')
+        read_only_fields = ('created_at', 'sender_', 'recipient_')
 
     sender = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    recipient_ = serializers.ReadOnlyField(source='recipient.username')
+    sender_ = serializers.ReadOnlyField(source='sender.username')
+    created_at = serializers.DateTimeField(format="%Y %B %d at %H:%M")
