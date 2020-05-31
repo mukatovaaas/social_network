@@ -27,11 +27,16 @@ class FollowingSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ('id', 'user', 'user_', 'content', 'created_at', 'likes')
+        fields = ('id', 'user', 'user_', 'content', 'created_at', 'likes', 'is_liked')
 
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     user_ = serializers.ReadOnlyField(source='user.username')
     likes = serializers.ReadOnlyField(source='like_set.count')
+    is_liked = serializers.SerializerMethodField(read_only=True)
+
+    def get_is_liked(self, obj):
+        user = self.context['request'].user
+        return bool(Like.objects.filter(post=obj, user=user))
 
 
 class LikeSerializer(serializers.ModelSerializer):

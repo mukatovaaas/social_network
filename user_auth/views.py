@@ -51,12 +51,10 @@ class PostView(generics.CreateAPIView):
         return Post.objects.filter(user=self.request.user)
 
 
-class PostLikesListView(generics.ListCreateAPIView):
+class PostLikesListView(generics.CreateAPIView):
     serializer_class = serializers.LikeSerializer
     permission_classes = (IsAuthenticated,)
-
-    def get_queryset(self):
-        return Like.objects.filter(post_id=self.kwargs.get('pk'))
+    queryset = Like.objects.all()
 
 
 class PostCommentsListView(generics.ListCreateAPIView):
@@ -95,8 +93,8 @@ class SendMessageView(generics.CreateAPIView, generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return Message.objects\
-            .filter(Q(sender=self.request.user) | Q(recipient=self.request.user))\
+        return Message.objects \
+            .filter(Q(sender=self.request.user) | Q(recipient=self.request.user)) \
             .order_by('-created_at')
 
 
@@ -117,8 +115,7 @@ class UserMessagesView(generics.ListAPIView):
 
 class UserSearchView(generics.ListAPIView):
     serializer_class = serializers.CustomUserSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
     search_fields = ['username']
     filter_backends = (filters.SearchFilter,)
     queryset = serializers.User.objects.all()
-
