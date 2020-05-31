@@ -51,9 +51,10 @@ class LikeSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ('user', 'post', 'content')
+        fields = ('user', 'user_', 'post', 'content')
 
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    user_ = serializers.ReadOnlyField(source='user.username')
 
 
 class FollowSerializer(serializers.ModelSerializer):
