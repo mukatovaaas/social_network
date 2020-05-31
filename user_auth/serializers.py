@@ -9,17 +9,19 @@ User = get_user_model()
 class FollowerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Follower
-        fields = ('follower', 'username')
+        fields = ('id', 'username',)
 
     username = serializers.ReadOnlyField(source='following.username')
+    id = serializers.ReadOnlyField(source='following.id')
 
 
 class FollowingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Follower
-        fields = ('following', 'username')
+        fields = ('id', 'username')
 
     username = serializers.ReadOnlyField(source='following.username')
+    id = serializers.ReadOnlyField(source='following.id')
 
 
 class PostSerializer(serializers.ModelSerializer):
