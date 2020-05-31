@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
 from rest_framework.response import Response
 from django.utils.translation import gettext as _
+from django.db.models import Q
 
 
 class FollowerListView(generics.ListAPIView):
@@ -44,6 +45,7 @@ class MyPostListView(generics.ListAPIView):
 
 class PostView(generics.CreateAPIView):
     serializer_class = serializers.PostSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return Post.objects.filter(user=self.request.user)
@@ -51,6 +53,7 @@ class PostView(generics.CreateAPIView):
 
 class PostLikesListView(generics.ListCreateAPIView):
     serializer_class = serializers.LikeSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return Like.objects.filter(post_id=self.kwargs.get('pk'))
@@ -58,6 +61,7 @@ class PostLikesListView(generics.ListCreateAPIView):
 
 class PostCommentsListView(generics.ListCreateAPIView):
     serializer_class = serializers.CommentSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return Comment.objects.filter(post_id=self.kwargs.get('pk'))
@@ -66,10 +70,12 @@ class PostCommentsListView(generics.ListCreateAPIView):
 class FollowCreateView(generics.CreateAPIView):
     serializer_class = serializers.FollowSerializer
     queryset = Follower.objects.all()
+    permission_classes = (IsAuthenticated,)
 
 
 class FollowDestroyView(generics.CreateAPIView):
     serializer_class = serializers.FollowSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         if 'following' in self.request.POST:
@@ -82,3 +88,11 @@ class FollowDestroyView(generics.CreateAPIView):
             queryset[0].delete()
             return Response('done', status=status.HTTP_201_CREATED)
         return Response('error', status=status.HTTP_303_SEE_OTHER)
+
+
+class SendMessageView(generics.CreateAPIView, generics.ListAPIView):
+    serializer_class = serializers.MessageCreateSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        return Message.objects.filter(Q(sender=self.request.user) | Q(recipient=self.request.user))
