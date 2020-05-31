@@ -81,4 +81,4 @@ class MessageCreateSerializer(serializers.ModelSerializer):
     sender = serializers.HiddenField(default=serializers.CurrentUserDefault())
     recipient_ = serializers.ReadOnlyField(source='recipient.username')
     sender_ = serializers.ReadOnlyField(source='sender.username')
-    created_at = serializers.DateTimeField(format="%Y %B %d at %H:%M")
+    created_at = serializers.DateTimeField(format="%Y %B %d at %H:%M", read_only=True)
