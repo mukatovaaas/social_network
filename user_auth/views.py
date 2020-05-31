@@ -1,5 +1,5 @@
 from . import serializers
-from rest_framework import generics, mixins, permissions
+from rest_framework import generics, mixins, permissions, filters
 from .models import *
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
@@ -113,3 +113,12 @@ class UserMessagesView(generics.ListAPIView):
     def get(self, request, *args, **kwargs):
         self.recipient = kwargs['user']
         return super().get(request, *args, **kwargs)
+
+
+class UserSearchView(generics.ListAPIView):
+    serializer_class = serializers.CustomUserSerializer
+    permission_classes = (IsAuthenticated, )
+    search_fields = ['username']
+    filter_backends = (filters.SearchFilter,)
+    queryset = serializers.User.objects.all()
+

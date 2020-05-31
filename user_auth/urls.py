@@ -16,6 +16,7 @@ urlpatterns = [
     path('unfollow/', views.FollowDestroyView.as_view()),
     path('chat/', views.SendMessageView.as_view()),
     path('chat/<int:user>', views.UserMessagesView.as_view()),
+    path('search/', views.UserSearchView.as_view()),
 ]
 
 # register http://localhost:8000/auth/users
