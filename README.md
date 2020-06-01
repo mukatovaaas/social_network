@@ -11,15 +11,15 @@ Models:
 Endpoints:
 <br>
   for authorization and authentication djoser package is used<br>
-  get |  'followers/'       | lists followers<br>
-  get |  'following/'       | lists following users<br>
-  get |  'posts/<int:pk>'   | lists user posts<br>
-  post | 'like/'            | like user post<br>
-  get |  'comments/<int:pk>'| list comments of post<br>
-  get |  'posts/'           | list request.user posts<br>
-  post | 'post/'            | create a post  <br>
-  post | 'follow/'          | follow user<br>
-  post | 'unfollow/'        | unfollow user<br>
-  get/post | 'chat/'        | list messages/send message to user<br>
-  get |  'chat/<int:user>'  | list messages with request.user and user<br>
-  get |  'search/',         | search user by username<br>
+  GET |  'followers/'       | lists followers<br>
+  GET |  'following/'       | lists following users<br>
+  GET |  'posts/<int:pk>'   | lists user posts<br>
+  POST | 'like/'            | like user post<br>
+  GET |  'comments/<int:pk>'| list comments of post<br>
+  GET |  'posts/'           | list request.user posts<br>
+  POST | 'post/'            | create a post  <br>
+  POST | 'follow/'          | follow user<br>
+  POST | 'unfollow/'        | unfollow user<br>
+  GET/POST | 'chat/'        | list messages/send message to user<br>
+  GET |  'chat/<int:user>'  | list messages with request.user and user<br>
+  GET |  'search/',         | search user by username<br>
